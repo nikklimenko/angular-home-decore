@@ -18,6 +18,7 @@ import {Router} from "@angular/router";
 export class ProductCartComponent implements OnInit{
   serverStaticPath: string = environment.serverStaticPath;
   count: number = 1;
+  showFavorites: boolean = false;
   @Input() product!: ProductType;
   @Input() isLight: boolean = false;
   @Input() countInCart: number | undefined = 0;
@@ -32,6 +33,10 @@ export class ProductCartComponent implements OnInit{
   }
 
   ngOnInit() {
+    if(this.authService.getIsLoggedIn()){
+      this.showFavorites = true;
+    }
+
     if(this.countInCart && this.countInCart > 1){
       this.count = this.countInCart;
     }
@@ -69,7 +74,6 @@ export class ProductCartComponent implements OnInit{
           this.countInCart = this.count;
         });
     }
-
   }
 
   updateFavorite(){

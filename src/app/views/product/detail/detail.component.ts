@@ -48,6 +48,7 @@ export class DetailComponent implements OnInit{
   recommendedProducts: ProductType[] = [];
   serverStaticPath: string = environment.serverStaticPath;
   product!: ProductType;
+  showFavorites: boolean = false;
 
 
   constructor(private productService: ProductService,
@@ -59,6 +60,10 @@ export class DetailComponent implements OnInit{
   }
 
   ngOnInit() {
+
+    if(this.authService.getIsLoggedIn()){
+      this.showFavorites = true;
+    }
 
     this.activatedRoute.params.subscribe(params => {
       this.productService.getProduct(params['url'])
